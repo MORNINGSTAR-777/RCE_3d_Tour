@@ -7,7 +7,7 @@ import { BUILDINGS, TOUR_ORDER, HOME_POS, HOME_TARGET, buildingHeight } from './
 import { BLOCK_DETAILS } from './blockDetails';
 
 const DESC = {
-  admin: 'Administrative offices – four storeys, slate-stone entrance under the RUDRA canopy', a: 'Savestra – academic block with rooftop signage', b: 'Vidhra – academic block', c: 'Shastra – academic block (north)',
+  admin: 'Administrative offices – four storeys, slate-stone entrance under the RUDRA canopy', a: 'Sarvesta – academic block with rooftop signage', b: 'Vidhra – academic block', c: 'Shastra – academic block (north)',
   temple: 'Campus shrine', canteen: 'Food court', openAuditorium: 'Open-air hall with stage', auditorium: 'Main auditorium',
   girls: "Girls' residence", boys: "Boys' residence", mechlab: 'Mechanical engineering workshop and laboratory',
   cricket: 'Turf outfield with centre pitch – edge marked only by coloured boundary flags (no wall)',
@@ -62,8 +62,6 @@ const css = `
   .rc-hint{display:none}
 }
 `;
-const toWorldDims = (b) => `${(b.width * 3.7).toFixed(0)} m × ${(b.depth * 3.7).toFixed(0)} m (approx.)`;
-
 function CameraRig({ selectedId, resetKey, rotating, onArrived, autoTour, onTourStep }) {
   const { camera, controls, size } = useThree();
   const goal = useRef(null);
@@ -142,7 +140,6 @@ function CameraRig({ selectedId, resetKey, rotating, onArrived, autoTour, onTour
 
 const N = TOUR_ORDER.length;
 const dotColor = (b) => ({ auditorium: '#c9b98a', temple: '#c97d4b', open: '#9aa0a6', lab: '#8fb3c9', sport: '#4ade80' }[b.style] || '#d9d9a3');
-const floorsText = (b) => (['academic', 'modern', 'auditorium', 'lab'].includes(b.style) ? (b.floors > 1 ? `${b.floors} (G+${b.floors - 1})` : 'Ground only') : '—');
 
 export default function CampusPage() {
   const [selected, setSelected] = useState(null);
@@ -271,9 +268,6 @@ export default function CampusPage() {
                 {det.tags && <div className="rc-tags">{det.tags.map((t) => <span className="rc-tag" key={t}>{t}</span>)}</div>}
               </>
             )}
-            <div className="rc-row"><span>Floors</span><b>{floorsText(sel)}</b></div>
-            <div className="rc-row"><span>Footprint</span><b>{toWorldDims(sel)}</b></div>
-            <div className="rc-row"><span>Rooftop solar</span><b>{sel.solar ? 'Yes' : '—'}</b></div>
             <div className="rc-row"><span>Tour stop</span><b>{step + 1} / {N}</b></div>
           </div>
         ) : <p>{hover ? BUILDINGS[hover].label : tour ? 'Scroll (or drag the bar on the left) to tour every block one after another, or click a building.' : 'Click a building (or pick a block from the tabs below) to inspect it.'}</p>}

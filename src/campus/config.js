@@ -44,7 +44,7 @@ export const STATUS_COLORS = {
 // solar = { coverage 0..1, tilt radians }
 export const BUILDINGS = {
   admin: { id: 'admin', label: 'Admin Block', ...rect(274, 253, 472, 540), floors: 4, front: 'e', style: 'modern', porch: false, solar: { coverage: 0.35, tilt: 0.17 } },
-  a:     { id: 'a', label: 'A Block (Savestra)', ...rect(572, 678, 1017, 902), floors: 4, front: 'n', style: 'academic', solar: { coverage: 0.4, tilt: 0.17 },
+  a:     { id: 'a', label: 'A Block (Sarvesta)', ...rect(572, 678, 1017, 902), floors: 4, front: 'n', style: 'academic', solar: { coverage: 0.4, tilt: 0.17 },
            roofSign: { text: 'RAMACHANDRA', sub: 'COLLEGE OF ENGINEERING', face: 'n' } },
   b:     { id: 'b', label: 'B Block (Vidhra)', ...rect(1137, 667, 1624, 922), floors: 3, front: 'n', style: 'academic', solar: { coverage: 0.4, tilt: 0.17 } },
   c:     { id: 'c', label: 'C Block (Shastra)', ...rect(497, 62, 1038, 222), floors: 4, front: 's', style: 'academic', solar: { coverage: 0.35, tilt: 0.17 } },
