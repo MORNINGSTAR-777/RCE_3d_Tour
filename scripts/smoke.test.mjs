@@ -1,0 +1,16 @@
+const handler = { get: (t, p) => p in t ? t[p] : (p === 'canvas' ? {} : () => new Proxy(function(){}, handler)), set: () => true, apply: () => new Proxy(function(){}, handler) };
+const ctx = new Proxy({}, { get: (t,p)=> (p==='createLinearGradient'? ()=>({addColorStop(){}}) : ()=>{}), set:()=>true });
+const el = () => new Proxy({ width:0,height:0,getContext:()=>ctx, style:{} }, { get:(t,p)=> p in t? t[p] : (()=>{}), set:(t,p,v)=>{t[p]=v;return true} });
+globalThis.document = { createElement: el, createElementNS: el, body:{style:{}}, documentElement:{style:{}} };
+globalThis.window = globalThis; globalThis.self = globalThis;
+const React = (await import('react')).default;
+const ReactThree = await import('@react-three/test-renderer');
+const { default: CampusModel, STRUCTURES } = await import('./src/campus/CampusModel.jsx');
+const THREE = await import('three');
+const fakeGL = { domElement: { style:{}, addEventListener(){}, removeEventListener(){}, getContext:()=>ctx }, setPixelRatio(){}, setSize(){}, render(){}, dispose(){}, setClearColor(){}, getPixelRatio:()=>1, shadowMap:{}, xr:{ addEventListener(){}, enabled:false, setAnimationLoop(){} }, capabilities:{getMaxAnisotropy:()=>8}, info:{}, outputColorSpace:'srgb', setAnimationLoop(){}, getSize:(v)=>v, getDrawingBufferSize:(v)=>v, getContext:()=>ctx };
+const r = await ReactThree.default.create(React.createElement(CampusModel, { showLabels: false }), { gl: fakeGL });
+const root = r.scene.children[0].instance;
+let meshes = 0, inst = 0, solar = 0; const names = [];
+root.traverse((o) => { if (o.isMesh) meshes++; if (o.isInstancedMesh) { inst++; if (o.count && o.material?.map && o.geometry.parameters?.height === 0.04) solar += o.count; } });
+console.log('structures', STRUCTURES.length, 'meshes', meshes, 'instancedMeshes', inst, 'solarPanels', solar);
+for (const c of root.children) if (c.position.x || c.position.z) console.log(c.position.x.toFixed(1), c.position.z.toFixed(1));

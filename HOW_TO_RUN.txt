@@ -1,0 +1,12 @@
+HOW TO RUN (takes 2 minutes)
+
+1. Install Node.js (LTS, version 18 or newer) from https://nodejs.org  (one time only)
+2. Unzip this folder.
+3. Windows : double-click START_WINDOWS.bat
+   Mac/Linux: run ./start_mac_linux.sh
+   (or in a terminal inside the folder:  npm install   then   npm run dev )
+4. Open http://localhost:5173 in Chrome / Edge.
+
+If you see an error like "Permission denied" or "Cannot find module @rollup/...":
+   delete the node_modules folder and run  npm install  again.
+Do NOT double-click dist/index.html - it must be served by npm run dev (or npm run preview).
